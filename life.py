@@ -70,8 +70,8 @@ def star_game():
     generate_map(map)
     live_cells = 0
     for gen in range(GENERATIONS):
-        print('gerentaion: %d'%gen, end='\r')
-        print(ui_print(map), end='\r')
+        print('generation: %d'%gen)
+        print(ui_print(map))
         time.sleep(TIME_BETWEEN_GENERATION)
     
         x = 0
