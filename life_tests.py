@@ -6,23 +6,42 @@ class LifeTest(unittest.TestCase):
         map = [
             [0, 0, 0],
             [0, 1, 0],
-            [0, 0 ,0]   
+            [0, 0 ,0]
         ]
         neighbours = count_neighbours(map, 1, 1)
         self.assertEqual(neighbours, 0)
         map = [
             [0, 0, 0],
             [0, 1, 0],
-            [0, 0 ,1]   
+            [0, 0 ,1]
         ]
         neighbours = count_neighbours(map, 1, 1)
         self.assertEqual(neighbours, 1)
         map = [
             [1, 0, 0],
             [0, 0, 0],
-            [0, 0 ,1]   
+            [0, 0 ,1]
         ]
         neighbours = count_neighbours(map, 1, 1)
+        self.assertEqual(neighbours, 2)
+        
+    def test_count_neighbours_on_border(self):
+        # must count cells in (0, 1), (-1, 0), (1, 1), (0, 3), (3, 3)
+        map = [
+            [0, 1, 0, 0],
+            [1, 0, 0, 1],
+            [0, 0 ,0, 0],
+            [0, 0 ,0, 1],
+        ]
+        neighbours = count_neighbours(map, 0, 0)
+        self.assertEqual(neighbours, 4)
+        map = [
+            [0, 1, 0, 0],
+            [1, 0, 0, 1],
+            [0, 0 ,0, 0],
+            [0, 0 ,0, 1],
+        ]
+        neighbours = count_neighbours(map, 1, 0)
         self.assertEqual(neighbours, 2)
         
     def test_rule_1(self):
@@ -38,14 +57,14 @@ class LifeTest(unittest.TestCase):
         map = [
             [0, 0, 1],
             [0, 1, 0],
-            [1, 0 ,0]   
+            [1, 0 ,0]
         ]
         is_alive = check_cell(map, 1, 1)
         self.assertEqual(is_alive, True)
         map = [
             [0, 0, 1],
             [0, 1, 0],
-            [1, 0 ,1]   
+            [1, 0 ,1]
         ]
         is_alive = check_cell(map, 1, 1)
         self.assertEqual(is_alive, True)
@@ -63,7 +82,7 @@ class LifeTest(unittest.TestCase):
         map = [
             [1, 0, 0],
             [0, 0, 1],
-            [0, 1 ,0]   
+            [0, 1 ,0]
         ]
         is_alive = check_cell(map, 1, 1)
         self.assertEqual(is_alive, True)

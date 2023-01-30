@@ -21,22 +21,35 @@ def generate_map(map):
         row = []
         map.append(row)
 
+def boundary_tranform(x, y):
+    if x < 0:
+       x = MAP_HEIGHT - 1
+    elif x > MAP_HEIGHT - 1:
+       x = 0
+       
+    if y < 0: 
+       y = MAP_WIDTH - 1
+    elif y > MAP_WIDTH - 1:
+       y = 0
+       
+    return x, y
+
+
 def is_alive(map, x, y):
-    if x < 0 or x > MAP_HEIGHT - 1:
-        return 0
-    if y < 0 or y > MAP_WIDTH - 1:
-        return 0
     return map[x][y] == 1
+
 
 def should_die(neighbours):
     if neighbours < 2 or neighbours > 3:
         return True
     return False
 
+
 def should_born(neighbours):
     if neighbours == 3:
         return True
     return False
+
 
 def check_cell(map, x, y):
     alive = is_alive(map, x, y)
@@ -60,7 +73,8 @@ def count_neighbours(map, x, y):
          (x-1, y-1), (x, y-1), (x+1, y-1),
     ]
     for pos in positions:
-        if is_alive(map, pos[0], pos[1]):
+        tx, ty = boundary_tranform(pos[0], pos[1])
+        if is_alive(map, tx, ty):
             neighbours += 1
     return neighbours
 
