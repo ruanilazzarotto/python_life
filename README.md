@@ -9,3 +9,4 @@ Conway`s Life Game in python
 
 ## Custom  Rules
 1. If the map has no living cells, then game over.
+2. If the number of living cells remains the same after 10 generations, then game over

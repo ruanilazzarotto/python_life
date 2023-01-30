@@ -79,13 +79,26 @@ def count_neighbours(map, x, y):
     return neighbours
 
 
+def was_stable(life_log):
+    return life_log.count(life_log[0]) == len(life_log)
+
+
+def check_stability(log, live_cells):
+    if len(log) == 10:
+        if was_stable(log):
+            return True
+        log.pop(0)  
+    log.append(live_cells)
+    return False
+    
+    
 def star_game():
     map = []
     generate_map(map)
     live_cells = 0
-    for gen in range(GENERATIONS):
-        print('generation: %d'%gen)
-        print(ui_print(map))
+    live_cells_count_log = []
+    for gen in range(MAX_GENERATIONS):
+        live_cells = 0
         time.sleep(TIME_BETWEEN_GENERATION)
     
         x = 0
@@ -99,6 +112,14 @@ def star_game():
         if live_cells == 0:
             print("GAME OVER: No life left")
             break
+        
+        if check_stability(live_cells_count_log, live_cells):
+            print("GAME OVER: The number of living cells is stable")
+            break
+        
+        print('generation: %d'%gen)
+        print(ui_print(map))
+
 
 star_game()
 
