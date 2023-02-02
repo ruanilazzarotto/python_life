@@ -1,5 +1,5 @@
 import unittest
-from life import count_neighbours, check_cell
+from life import count_neighbours, check_cell, next_generation, is_alive as alive
 
 class LifeTest(unittest.TestCase):
     def test_count_neighbours(self):
@@ -50,7 +50,8 @@ class LifeTest(unittest.TestCase):
             [0, 1, 0],
             [0, 0 ,0]   
         ]
-        is_alive = check_cell(map, 1, 1)
+        map, cells = next_generation(map)
+        is_alive = alive(map, 1, 1)
         self.assertEqual(is_alive, False)
         
     def test_rule_2(self):
@@ -59,7 +60,8 @@ class LifeTest(unittest.TestCase):
             [0, 1, 0],
             [1, 0 ,0]
         ]
-        is_alive = check_cell(map, 1, 1)
+        map, cells = next_generation(map)
+        is_alive = alive(map, 1, 1)
         self.assertEqual(is_alive, True)
         map = [
             [0, 0, 1],
@@ -80,9 +82,13 @@ class LifeTest(unittest.TestCase):
         
     def test_rule_4(self):
         map = [
-            [1, 0, 0],
-            [0, 0, 1],
-            [0, 1 ,0]
+            [0, 0, 0, 0, 0],
+            [0, 0, 1, 0, 0],
+            [0, 0, 0, 0, 0],
+            [0, 1 ,0, 1, 0],
+            [0, 0, 0, 0, 0],
         ]
-        is_alive = check_cell(map, 1, 1)
+        map, cells = next_generation(map.copy())
+        is_alive = alive(map, 2, 2)
         self.assertEqual(is_alive, True)
+        self.assertEqual(cells, 1)
