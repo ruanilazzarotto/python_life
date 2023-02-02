@@ -21,18 +21,22 @@ def generate_map(map):
         row = []
         map.append(row)
 
-def boundary_tranform(x, y):
+
+def map_dimentions(map):
+    return len(map) , len(map[0])
+
+
+def boundary_tranform(map, x, y):
+    height, width = map_dimentions(map)
     if x < 0:
-       x = MAP_HEIGHT - 1
-    elif x > MAP_HEIGHT - 1:
-       x = 0
+        x = height - 1
+    elif x > height - 1:
+        x = 0
        
     if y < 0: 
-       y = MAP_WIDTH - 1
-    elif y > MAP_WIDTH - 1:
-       y = 0
-       
-    return x, y
+        y = width - 1
+    elif y > width - 1:
+        y = 0
 
 
 def is_alive(map, x, y):
@@ -73,7 +77,7 @@ def count_neighbours(map, x, y):
          (x-1, y-1), (x, y-1), (x+1, y-1),
     ]
     for pos in positions:
-        tx, ty = boundary_tranform(pos[0], pos[1])
+        tx, ty = boundary_tranform(map, pos[0], pos[1])
         if is_alive(map, tx, ty):
             neighbours += 1
     return neighbours
