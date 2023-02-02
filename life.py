@@ -5,21 +5,25 @@ from ui_life import ui_print
 
 MAP_HEIGHT = 30
 MAP_WIDTH = 50
-GENERATIONS = 1000
+MAX_GENERATIONS = 1000
 START_LIFE_RATE = 0.3
 TIME_BETWEEN_GENERATION = 0.2
 
 
-def generate_map(map):
-    life_rate = START_LIFE_RATE
-    if life_rate == 0:
-        life_rate = 0.5
+def generate_map(height=MAP_HEIGHT, width=MAP_WIDTH, life_rate=START_LIFE_RATE):
+    map = []
+    empty_rate = 1/life_rate if life_rate != 0 else 0
     row = []
-    for x in range(MAP_HEIGHT+1):
-        for y in range(MAP_WIDTH):
-            row += choices([0, 1], [1/life_rate, life_rate])
-        row = []
+    for x in range(0, height):
+        for y in range(0, width):
+            if life_rate == 0:
+                row += [0]
+            else:
+                row += choices([0, 1], [empty_rate, life_rate])
         map.append(row)
+        row = []
+        
+    return map
 
 
 def map_dimentions(map):
@@ -61,11 +65,9 @@ def check_cell(map, x, y):
     neighbours = count_neighbours(map, x, y)
     if alive:
         if should_die(neighbours):
-           map[x][y] = 0
-           alive = False
+            alive = False
     else:
         if should_born(neighbours):
-            map[x][y] = 1
             alive = True
     return alive
     
@@ -97,22 +99,38 @@ def check_stability(log, live_cells):
     return False
 
 
+def next_generation(map):
+    h, w =  map_dimentions(map)
+    next_map = generate_map(h, w, 0)
+    live_cells = 0
+    for x in range(h):
+        for y in range(w):
+            alive = check_cell(map, x, y)
+            if alive:
+                live_cells += 1
+            next_map[x][y] = 1 if alive else 0
+            
+    return next_map, live_cells 
+
+
+def count_life(map):
+    x, life = 0, 0
+    for row in map:
+        for y in range(0, len(row)):
+            if map[x][y] == 1:
+                life += 1
+        x += 1
+    return life
+
+
 def star_game():
-    map = []
-    generate_map(map)
+    map = generate_map()
     live_cells = 0
     live_cells_count_log = []
     for gen in range(MAX_GENERATIONS):
-        live_cells = 0
+        
         time.sleep(TIME_BETWEEN_GENERATION)
-    
-        x = 0
-        for row in map:
-            for y in range(0, len(row)):
-                check_cell(map, x, y)
-                if is_alive(map, x, y):
-                    live_cells += 1
-            x += 1
+        map, live_cells = next_generation(map)
 
         if live_cells == 0:
             print("GAME OVER: No life left")
