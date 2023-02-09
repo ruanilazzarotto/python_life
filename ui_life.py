@@ -1,5 +1,6 @@
 
-def ui_print(map):
+def ui_print(map, gen):
+    print('generation: %d'%gen)
     map_str = ""
     print("", end='\r')
     x = 0
@@ -13,4 +14,10 @@ def ui_print(map):
         x+=1
         map_str += "\n"
         # print("")
-    return map_str
+    print(map_str)
+
+def ui_msg_no_life():
+    print("GAME OVER: No life left")
+
+def ui_msg_stable():
+    print("GAME OVER: The number of living cells is stable")

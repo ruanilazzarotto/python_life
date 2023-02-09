@@ -1,6 +1,6 @@
 import time
 from random import choices
-from ui_life import ui_print
+import ui_life as ui
 
 
 MAP_HEIGHT = 30
@@ -122,15 +122,14 @@ def star_game():
         map, live_cells = next_generation(map)
 
         if live_cells == 0:
-            print("GAME OVER: No life left")
+            ui.ui_msg_no_life()
             break
         
         if check_stability(live_cells_count_log, live_cells):
-            print("GAME OVER: The number of living cells is stable")
+            ui.ui_msg_stable()
             break
         
-        print('generation: %d'%gen)
-        print(ui_print(map))
+        ui.ui_print(map, gen)
 
 
 star_game()
