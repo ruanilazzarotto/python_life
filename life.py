@@ -129,7 +129,7 @@ def star_game():
             ui.ui_msg_stable()
             break
         
-        ui.ui_print(map, gen)
+        ui.ui_print(map, gen, live_cells)
 
 
 star_game()
