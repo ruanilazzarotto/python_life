@@ -112,7 +112,7 @@ def next_generation(map):
     return next_map, live_cells 
 
 
-def star_game():
+def start_game():
     map = generate_map()
     live_cells = 0
     live_cells_count_log = []
@@ -132,7 +132,7 @@ def star_game():
         ui.ui_print(map, gen, live_cells)
 
 
-star_game()
+start_game()
 
 
 
