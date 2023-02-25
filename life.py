@@ -121,6 +121,8 @@ def start_game():
         time.sleep(TIME_BETWEEN_GENERATION)
         map, live_cells = next_generation(map)
 
+        ui.ui_print(map, gen, live_cells)
+
         if live_cells == 0:
             ui.ui_msg_no_life()
             break
@@ -128,11 +130,37 @@ def start_game():
         if check_stability(live_cells_count_log, live_cells):
             ui.ui_msg_stable()
             break
-        
-        ui.ui_print(map, gen, live_cells)
 
 
-start_game()
+def menu(options):
+    key = None
+    ui.print_menu(options)
+    selected = -1
+    while selected not in range(len(options)):
+        key = input()
+        selected = int(key or -1)
+    return selected
 
 
+def main_menu():
+    main_options = [
+        "Start Game",
+        "Exit"
+    ]
+    op = -1
+    while op != 1:
+        op = menu(main_options)
+        if op == 0:
+            start_game()
+    
+    print("Exit")
+    exit()
 
+
+def main():
+    ui.print_title()
+    main_menu()
+    
+
+
+main()

@@ -31,5 +31,20 @@ def ui_print(map, gen, cells):
 def ui_msg_no_life():
     print("GAME OVER: No life left")
 
+
 def ui_msg_stable():
     print("GAME OVER: The number of living cells is stable")
+
+
+def ui_key():
+    return input()
+
+
+def print_menu(options):
+    print("--------------------------")
+    for op in range(len(options)):
+        print("[%d] %s"%(op, options[op]))
+
+
+def print_title():
+    print(" ~ Conway's Game of Life ~")
